@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "103899524394",
+    "firebase_url": "https://covidinfoleads-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "covidinfoleads",
+    "storage_bucket": "covidinfoleads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103899524394:android:e318dc46d2fe72a416c253",
+        "android_client_info": {
+          "package_name": "com.covhelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103899524394-d8imbo2lk4sn7tpeuck22ra2f59vcv49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3DrSTfTnt8S-L1Tv-852UKDNRMhAEzLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103899524394-d8imbo2lk4sn7tpeuck22ra2f59vcv49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103899524394:android:3196c4137fdc83db16c253",
+        "android_client_info": {
+          "package_name": "com.example.covinfoleadbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103899524394-d8imbo2lk4sn7tpeuck22ra2f59vcv49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3DrSTfTnt8S-L1Tv-852UKDNRMhAEzLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103899524394-d8imbo2lk4sn7tpeuck22ra2f59vcv49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

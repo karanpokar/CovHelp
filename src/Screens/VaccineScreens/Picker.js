@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, {useEffect} from 'react';
-import {useState} from 'react';
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -8,21 +8,21 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 //import data from './../JSON/Remdesivir-Distributor-List.json';
-const download = ({navigation}) => {
+const download = ({ navigation }) => {
   const [states, setStates] = useState(null);
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState("");
   //console.log(JSON.stringify(data));
   useEffect(() => {
     async function getStates() {
       await axios
-        .get('https://cdn-api.co-vin.in/api/v2/admin/location/states')
-        .then(data => {
+        .get("https://cdn-api.co-vin.in/api/v2/admin/location/states")
+        .then((data) => {
           console.log(JSON.stringify(data.data.states));
           setStates(data.data.states);
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     }
     getStates();
   }, []);
@@ -31,12 +31,12 @@ const download = ({navigation}) => {
     alert(item.state_name);
     console.log(val.state_name);
   }
-  const renderItem = ({item}) => (
+  const renderItem = ({ item }) => (
     <TouchableOpacity
       key={item.states_id}
-      onPress={() => navigation.navigate('VaccineSlot', {item})}
+      onPress={() => navigation.navigate("VaccineSlot", { item })}
       style={{
-        shadowColor: 'black',
+        shadowColor: "black",
         shadowOffset: {
           width: 0,
           height: 2,
@@ -45,17 +45,19 @@ const download = ({navigation}) => {
         shadowRadius: 3.84,
 
         elevation: 5,
-        width: Dimensions.get('screen').width - 50,
+        width: Dimensions.get("screen").width - 50,
         height: 50,
         borderRadius: 5,
         marginVertical: 10,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#7F75C3',
-      }}>
+        alignSelf: "center",
+        justifyContent: "center",
+        backgroundColor: "#7F75C3",
+      }}
+    >
       <Text
         key={item.states_id}
-        style={{fontSize: 20, alignSelf: 'center', color: 'white'}}>
+        style={{ fontSize: 20, alignSelf: "center", color: "white" }}
+      >
         {item.state_name}
       </Text>
     </TouchableOpacity>
@@ -65,7 +67,7 @@ const download = ({navigation}) => {
       <View style={styles.container}>
         <FlatList
           data={states}
-          keyExtractor={states => states.states_id}
+          keyExtractor={(item) => item.states_id}
           renderItem={renderItem}
         />
       </View>
@@ -80,7 +82,7 @@ const download = ({navigation}) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
   },
 });
