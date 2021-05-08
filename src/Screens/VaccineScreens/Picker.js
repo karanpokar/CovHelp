@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import LottieView from "lottie-react-native";
 import {
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 //import data from './../JSON/Remdesivir-Distributor-List.json';
 const download = ({ navigation }) => {
@@ -31,6 +33,10 @@ const download = ({ navigation }) => {
     alert(item.state_name);
     console.log(val.state_name);
   }
+  const handlePress = () => {
+    Linking.openURL("https://www.cowin.gov.in/");
+  };
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       key={item.states_id}
@@ -74,8 +80,31 @@ const download = ({ navigation }) => {
     );
   } else {
     return (
-      <View>
-        <Text>States Loading</Text>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <LottieView
+            source={require("../../animation/covid-19-protect.json")}
+            autoPlay
+            loop
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <LottieView
+            source={require("../../animation/2326-coming-soon.json")}
+            autoPlay
+            loop
+          />
+        </View>
+        <TouchableOpacity
+          style={{
+            alignSelf: "center",
+            backgroundColor: "orange",
+            borderRadius: 5,
+          }}
+          onPress={() => handlePress()}
+        >
+          <Text style={{ color: "white", fontSize: 26 }}>Get Vaccine Info</Text>
+        </TouchableOpacity>
       </View>
     );
   }

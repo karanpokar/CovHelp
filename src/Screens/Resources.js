@@ -13,7 +13,6 @@ import LottieView from "lottie-react-native";
 import Icon from "react-native-vector-icons/Fontisto";
 import Icons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
-const reference = database().ref("/Resources");
 
 const Resources = () => {
   const [data, setData] = React.useState(null);
@@ -21,12 +20,14 @@ const Resources = () => {
   const [res, setRes] = React.useState("Beds");
   const [city, setCity] = React.useState("India");
   React.useEffect(async () => {
-    console.log("Every 1 minute");
+    console.log("After 1 minute");
     await database()
       .ref(`/${res}`)
+      .orderByValue("reversetoken")
       .on("value", (snapshot) => {
         setData(snapshot.val());
         setCity("India");
+        console.log("Data from Firebase", snapshot.val());
       });
     // Stop listening for updates when no longer required
   }, [refresh, res]);
@@ -42,17 +43,18 @@ const Resources = () => {
     for (var a in val) {
       var pos = val[a];
       dt.push({ ...data[pos], key: pos });
+      dt = dt.sort((a, b) => a.reversetoken - b.reversetoken);
       place.push({
         label: data[pos]["cityName"],
         value: data[pos]["cityName"],
       });
     }
-
     var cities = dt.filter(function (item) {
       return item.cityName == city;
     });
-    console.log(place);
-    console.log("Dt", dt);
+    cities = cities.sort((a, b) => a.reversetoken - b.reversetoken);
+    //console.log(place);
+    //console.log("Dt", dt);
   }
   const renderItemRes = ({ item }) => (
     <View
@@ -86,7 +88,7 @@ const Resources = () => {
           Verified Date: {item.verifieddate}
         </Text>
         <Text style={{ alignSelf: "center", fontSize: 16 }}>
-          Verified Time: {item.verifiedtime}
+          Verified Time:{item.verifiedtime}
         </Text>
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
@@ -102,27 +104,22 @@ const Resources = () => {
   const images = [
     {
       image:
-        "https://res.cloudinary.com/dskyiphth/image/upload/v1620471443/CovHelp/beds_dwl3hw.png",
+        "https://res.cloudinary.com/dskyiphth/image/upload/v1620480040/Travel/hospital-bed_vxw7io.png",
       resource: "Beds",
     },
     {
       image:
-        "https://res.cloudinary.com/dskyiphth/image/upload/v1620471442/CovHelp/oxygen_wl4ua6.png",
+        "https://res.cloudinary.com/dskyiphth/image/upload/v1620480192/Travel/oxygen_cbv9il.png",
       resource: "Oxygen",
     },
     {
       image:
-        "https://res.cloudinary.com/dskyiphth/image/upload/v1620471444/CovHelp/syringe_nmegmo.png",
+        "https://res.cloudinary.com/dskyiphth/image/upload/v1620480135/Travel/medicine_qyblfc.png",
       resource: "Medicines",
     },
     {
       image:
-        "https://res.cloudinary.com/dskyiphth/image/upload/v1620471442/CovHelp/food_x6cfgj.png",
-      resource: "Food",
-    },
-    {
-      image:
-        "https://res.cloudinary.com/dskyiphth/image/upload/v1620471442/CovHelp/plasma_einojo.png",
+        "https://res.cloudinary.com/dskyiphth/image/upload/v1620480226/Travel/blood-test_ale8xy.png",
       resource: "Plasma",
     },
   ];
@@ -136,12 +133,15 @@ const Resources = () => {
         marginHorizontal: 5,
       }}
     >
-      <TouchableOpacity onPress={() => setRes(item.resource)}>
+      <TouchableOpacity
+        style={{ width: 110, height: 110, justifyContent: "space-around" }}
+        onPress={() => setRes(item.resource)}
+      >
         <Image
           source={{ uri: `${item.image}` }}
           style={{
-            height: 100,
-            width: 100,
+            height: 80,
+            width: 80,
             alignSelf: "center",
             alignItems: "center",
           }}
@@ -232,7 +232,7 @@ const Resources = () => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={dt}
-            keyExtractor={(item) => item.key}
+            keyExtractor={(item) => item.reversetoken}
             renderItem={renderItemRes}
           />
         </View>
@@ -294,7 +294,7 @@ const Resources = () => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={cities}
-            keyExtractor={(item) => item.key}
+            keyExtractor={(item) => item.reversetoken}
             renderItem={renderItemRes}
           />
         </View>
