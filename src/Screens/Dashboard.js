@@ -23,18 +23,17 @@ const Dashboard = () => {
         console.log(response.data);
         setTotaldata(response.data);
       })
-      .catch((error) => console.log("Error", error));
+      .catch((error) => console.log("ErrorYesterday", error));
   }, []);
   React.useEffect(async () => {
     await axios
-      .get("https://corona.lmao.ninja/v2/historical?lastdays=10")
+      .get("https://corona.lmao.ninja/v2/historical?lastdays=5")
       .then((res) => {
         setTimes(res.data[147]);
       })
-      .catch((error) => console.log("Error", error));
+      .catch((error) => console.log("ErrorLast10", error));
   }, []);
-  var ringdata = null;
-  var lineData = null;
+  var ringdata = 0;
   var label = [];
   var dataline = [];
   if (times != null) {
@@ -59,7 +58,7 @@ const Dashboard = () => {
     };
   }
 
-  if (totaldata != null) {
+  if (totaldata != null && times != null) {
     return (
       <ScrollView>
         <View
@@ -226,7 +225,7 @@ const Dashboard = () => {
               backgroundGradientFrom: "#eff3ff",
               backgroundGradientTo: "#efefef",
               decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
+              color: (opacity = 255) => `rgba(255, 0, 0, ${opacity})`,
               style: {
                 borderRadius: 16,
               },

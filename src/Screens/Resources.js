@@ -20,6 +20,7 @@ const Resources = () => {
   const [res, setRes] = React.useState("Beds");
   const [city, setCity] = React.useState("India");
   React.useEffect(async () => {
+    //Use Effect to fetch Data from Firebase, will trigger everytime res and refresh value changes
     console.log("After 1 minute");
     await database()
       .ref(`/${res}`)
@@ -29,33 +30,49 @@ const Resources = () => {
         setCity("India");
         console.log("Data from Firebase", snapshot.val());
       });
-    // Stop listening for updates when no longer required
-  }, [res]);
+  }, [res, refresh]);
   setTimeout(() => {
     setRefresh(!refresh);
   }, 60000);
+
+  //After getting the Data from Firebase
+
   if (data != null) {
     var val = Object.keys(data);
     console.log("Data", data);
     console.log("Val", val);
     var dt = [];
     var place = [];
+    //Preprocesing Card Data
     for (var a in val) {
       var pos = val[a];
       dt.push({ ...data[pos], key: pos });
       dt = dt.sort((a, b) => a.reversetoken - b.reversetoken);
-      place.push({
-        label: data[pos]["cityName"],
-        value: data[pos]["cityName"],
+      place.push(data[pos]["cityName"]);
+    }
+    console.log("Place", place);
+    place = new Set(place);
+    // Preprocessing Pickerdata
+    var pickerData = [];
+    for (var a of place) {
+      pickerData.push({
+        label: a,
+        value: a,
+        color: "white",
       });
     }
     var cities = dt.filter(function (item) {
       return item.cityName == city;
     });
     cities = cities.sort((a, b) => a.reversetoken - b.reversetoken);
-    //console.log(place);
-    //console.log("Dt", dt);
+    console.log("Pickerdata", pickerData);
   }
+  const placeholder = {
+    label: city,
+    value: city,
+    color: "white",
+  };
+  //Render Item for Card
   const renderItemRes = ({ item }) => (
     <View
       style={{
@@ -103,6 +120,7 @@ const Resources = () => {
       </View>
     </View>
   );
+  //Images for Resource Slider
   const images = [
     {
       image:
@@ -209,16 +227,17 @@ const Resources = () => {
           />
           <View
             style={{
-              borderColor: "purple",
+              borderColor: "black",
               borderWidth: 2,
               width: Dimensions.get("screen").width - 30,
               borderRadius: 20,
               marginTop: 10,
               alignSelf: "center",
-              backgroundColor: "black",
+              backgroundColor: "purple",
             }}
           >
             <RNPickerSelect
+              placeholder={placeholder}
               style={{
                 fontSize: 16,
                 paddingHorizontal: 10,
@@ -226,11 +245,11 @@ const Resources = () => {
                 borderWidth: 0.5,
                 borderColor: "purple",
                 borderRadius: 8,
-                color: "black",
+                color: "blue",
                 paddingRight: 30,
               }}
               onValueChange={(value) => setCity(value)}
-              items={place}
+              items={pickerData}
             />
           </View>
           <Text
@@ -271,16 +290,17 @@ const Resources = () => {
           />
           <View
             style={{
-              borderColor: "purple",
+              borderColor: "black",
               borderWidth: 2,
               width: Dimensions.get("screen").width - 30,
               borderRadius: 20,
               marginTop: 10,
               alignSelf: "center",
-              backgroundColor: "black",
+              backgroundColor: "purple",
             }}
           >
             <RNPickerSelect
+              placeholder={placeholder}
               style={{
                 fontSize: 16,
                 paddingHorizontal: 10,
@@ -288,11 +308,11 @@ const Resources = () => {
                 borderWidth: 0.5,
                 borderColor: "purple",
                 borderRadius: 8,
-                color: "black",
+                color: "blue",
                 paddingRight: 30,
               }}
               onValueChange={(value) => setCity(value)}
-              items={place}
+              items={pickerData}
             />
           </View>
           <Text
