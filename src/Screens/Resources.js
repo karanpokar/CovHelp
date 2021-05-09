@@ -12,7 +12,7 @@ import database from "@react-native-firebase/database";
 import LottieView from "lottie-react-native";
 import Icon from "react-native-vector-icons/Fontisto";
 import Icons from "react-native-vector-icons/Ionicons";
-import RNPickerSelect from "react-native-picker-select";
+import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
 
 const Resources = () => {
   const [data, setData] = React.useState(null);
@@ -30,7 +30,7 @@ const Resources = () => {
         console.log("Data from Firebase", snapshot.val());
       });
     // Stop listening for updates when no longer required
-  }, [refresh, res]);
+  }, [res]);
   setTimeout(() => {
     setRefresh(!refresh);
   }, 60000);
@@ -75,7 +75,9 @@ const Resources = () => {
           justifyContent: "space-around",
         }}
       >
-        <Text style={{ flex: 0.9 }}>{item["body"]}</Text>
+        <Text style={{ flex: 0.9, fontWeight: "bold", fontSize: 15 }}>
+          {item["body"]}
+        </Text>
         <LottieView
           style={{ alignSelf: "flex-end", width: 35, height: 35 }}
           source={require("./../animation/verified.json")}
@@ -84,18 +86,18 @@ const Resources = () => {
         />
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Text style={{ alignSelf: "center", fontSize: 16 }}>
+        <Text style={{ alignSelf: "center", fontSize: 16, flex: 1 }}>
           Verified Date: {item.verifieddate}
         </Text>
-        <Text style={{ alignSelf: "center", fontSize: 16 }}>
+        <Text style={{ alignSelf: "center", fontSize: 16, flex: 1 }}>
           Verified Time:{item.verifiedtime}
         </Text>
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Text style={{ alignSelf: "center", fontSize: 18 }}>
+        <Text style={{ alignSelf: "center", fontSize: 18, flex: 1 }}>
           City: {item.cityName}
         </Text>
-        <Text style={{ alignSelf: "center", fontSize: 18 }}>
+        <Text style={{ alignSelf: "center", fontSize: 18, flex: 1 }}>
           Type: {item.resourcetype}
         </Text>
       </View>
@@ -155,7 +157,14 @@ const Resources = () => {
   if (data == null) {
     return (
       <ScrollView>
-        <Text style={{ alignSelf: "center", fontSize: 35, fontWeight: "bold" }}>
+        <Text
+          style={{
+            alignSelf: "center",
+            fontSize: 35,
+            fontWeight: "bold",
+            fontFamily: "ComicSans",
+          }}
+        >
           Find Resources
         </Text>
 
